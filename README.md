@@ -1,22 +1,22 @@
 # 📚 Annuaire des Expériences GEII
 
-Application web de gestion et de consultation des expériences professionnelles (stages et alternances) des étudiants du département **GEII** (Génie Électrique et Informatique Industrielle) — **IUT de Lille, Université de Lille**.
+Application web de gestion et de consultation des expériences professionnelles (stages et alternances) des étudiants du département **GEII** (Génie Électrique et Informatique Industrielle) - **IUT de Lille, Université de Lille**.
 
 ---
 
 ## 🎯 Fonctionnalités
 
-- **Annuaire consultable** — Recherche par entreprise, ville, domaine, année, type (stage/alternance)
-- **Filtres avancés** — Filtrage géographique par ville et rayon
-- **Fiches détaillées** — Poste, missions, outils, technologies utilisées
-- **Pages entreprises** — Regroupement des expériences par entreprise
-- **Ajout par les étudiants** — Formulaire avec vérification par email
-- **Panneau d'administration** — Approbation, édition, suppression des expériences
-- **Recherche globale** — Recherche instantanée dans tout le contenu
-- **Bibliothèque de documents** — Ressources pour la recherche de stage/alternance
-- **Formulaire de contact** — Avec protection anti-spam (honeypot)
-- **Responsive design** — Compatible mobile, tablette et desktop
-- **Mode sombre / clair** — Thème adaptatif
+- **Annuaire consultable** - Recherche par entreprise, ville, domaine, année, type (stage/alternance)
+- **Filtres avancés** - Filtrage géographique par ville et rayon
+- **Fiches détaillées** - Poste, missions, outils, technologies utilisées
+- **Pages entreprises** - Regroupement des expériences par entreprise
+- **Ajout par les étudiants** - Formulaire avec vérification par email
+- **Panneau d'administration** - Approbation, édition, suppression des expériences
+- **Recherche globale** - Recherche instantanée dans tout le contenu
+- **Bibliothèque de documents** - Ressources pour la recherche de stage/alternance
+- **Formulaire de contact** - Avec protection anti-spam (honeypot)
+- **Responsive design** - Compatible mobile, tablette et desktop
+- **Mode sombre / clair** - Thème adaptatif
 
 ## 🛠️ Technologies
 
@@ -80,8 +80,8 @@ Annuaire-GEII/
 
 ## 👤 Auteur
 
-**ROSSIGNOL Romane** — Étudiante BUT GEII, IUT de Lille, Université de Lille
+**ROSSIGNOL Romane** - Étudiant BUT GEII, IUT de Lille, Université de Lille
 
 ---
 
-*Projet réalisé dans le cadre du BUT GEII — 2025/2026*
+*Projet réalisé dans le cadre du BUT GEII - 2025/2026*
