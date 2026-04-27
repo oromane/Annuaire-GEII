@@ -1,0 +1,5138 @@
+/* ==========================================================================
+   FONDATION ET VARIABLES
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --font-main: 'Inter', sans-serif;
+    --font-headings: 'Inter', sans-serif;
+
+    /* Rayons */
+    --radius-small: 6px;
+    --radius-medium: 12px;
+    --radius-large: 16px;
+    --radius-pill: 9999px;
+
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.3s ease-in-out;
+
+    /* THÈME CLAIR */
+    --theme-accent: #3B82F6;
+    --theme-accent-hover: #2563EB;
+    --color-bg-body: #f9fafb;
+    --color-bg-nav: #ffffff;
+    --color-bg-card: #ffffff;
+    --color-text-primary: #1f2937;
+    --color-text-secondary: #4b5563;
+    --color-border: #e5e7eb;
+    --color-input-bg: #f9fafb;
+
+    /* Badges */
+    --color-badge-stage: var(--theme-accent);
+    --color-badge-stage-bg: #DBEAFE;
+    --color-badge-alt: #8b5cf6;
+    --color-badge-alt-bg: #EDE9FE;
+
+    /* Erreur */
+    --color-danger: #EF4444;
+    --color-danger-bg: #FEF2F2;
+}
+
+/* THÈME SOMBRE */
+html[data-theme="dark"] {
+    --theme-accent: #38BDF8;
+    --theme-accent-hover: #7DD3FC;
+    --color-bg-body: #0B1120;
+    --color-bg-nav: #172540;
+    --color-bg-card: #172540;
+    --color-text-primary: #E2E8F0;
+    --color-text-secondary: #CBD5E1;
+    /* Lighter for better contrast */
+    --color-border: #334155;
+    --color-input-bg: #0B1120;
+
+    --color-badge-stage: var(--theme-accent);
+    --color-badge-stage-bg: #1E3A8A;
+    --color-badge-alt: #A78BFA;
+    --color-badge-alt-bg: #372A5E;
+
+    --color-danger: #F87171;
+    --color-danger-bg: #450A0A;
+}
+
+/* ==========================================================================
+   RESET & STYLES GLOBAUX
+   ========================================================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    transition: background-color var(--transition-medium);
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--color-bg-body);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    transition: background-color var(--transition-medium), color var(--transition-medium);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+a {
+    color: var(--theme-accent);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Applique la police "Lora" aux titres pour plus d'élégance */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-headings);
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+/* Classe utilitaire pour centrer le contenu */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Utilitaires de texte */
+.text-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    overflow-wrap: break-word;
+}
+
+.text-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    line-height: 1.4;
+    max-height: 2.8em; /* 2 lines * 1.4 line-height */
+}
+
+/* ==========================================================================
+   3. HEADER (.site-header)
+   ========================================================================== */
+
+.site-header {
+    background-color: var(--color-bg-nav);
+    border-bottom: 1px solid var(--color-border);
+    padding: 1.25rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: background-color var(--transition-medium), border-color var(--transition-medium);
+}
+
+.hdr-inner {
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+/* --- Marque (Titre & Subtitle) --- */
+.hdr-brand .title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+}
+
+.hdr-brand .subtitle {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+}
+
+/* --- Navigation Principale --- */
+.hdr-nav {
+    display: flex;
+    gap: 1.5rem;
+    margin: 0 auto;
+    /* Centre la navigation */
+}
+
+.nav-link {
+    font-size: 0.95rem;
+    font-weight: 600;
+    /* Boosted from 500 for better readability */
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast);
+}
+
+.nav-link:hover {
+    color: var(--color-text-primary);
+    text-decoration: none;
+}
+
+/* Style pour la page active (à gérer en PHP si besoin) */
+.nav-link.is-active {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+/* --- Actions (Recherche & Thème) --- */
+.hdr-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    /* Increased from 1rem for better breathing room */
+}
+
+/* Logos Header */
+.hdr-logos-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+}
+
+.hdr-logo {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+    vertical-align: middle;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    image-rendering: -webkit-optimize-contrast;
+}
+
+/* Le logo GEII est visuellement plus petit : on le compense */
+.hdr-logo.logo-geii {
+    height: 30px;
+}
+
+html[data-theme="dark"] .hdr-logo {
+    opacity: 0.95;
+}
+
+html[data-theme="dark"] .logo-geii {
+    filter: none;
+    opacity: 1;
+}
+
+/* --- Logo theme switching --- */
+.logo-dark-only {
+    display: none;
+}
+
+.logo-light-only {
+    display: block;
+}
+
+html[data-theme="dark"] .logo-dark-only {
+    display: block;
+}
+
+html[data-theme="dark"] .logo-light-only {
+    display: none;
+}
+
+/* Tablette */
+@media (max-width: 1024px) {
+    .hdr-logo {
+        height: 50px;
+    }
+
+    .hdr-logo.logo-geii {
+        height: 26px;
+    }
+
+    .hdr-logos-group {
+        gap: 0.5rem;
+    }
+}
+
+/* Mobile : on cache les logos pour gagner de la place */
+@media (max-width: 768px) {
+    .hdr-logos-group {
+        display: none;
+    }
+}
+
+
+.hdr-search input[type="search"] {
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-medium);
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    transition: all var(--transition-fast);
+}
+
+.hdr-search input[type="search"]::placeholder {
+    color: var(--color-text-secondary);
+}
+
+.hdr-search input[type="search"]:focus {
+    outline: none;
+    border-color: var(--theme-accent);
+    box-shadow: 0 0 0 2px var(--theme-accent-hover);
+}
+
+/* --- Burger (Caché par défaut) --- */
+.hdr-burger {
+    display: none;
+    /* Caché sur desktop */
+}
+
+/* --- Menu mobile (Caché par défaut) --- */
+.hdr-mobile {
+    display: none;
+    /* Caché sur desktop */
+}
+
+/* ==========================================================================
+   4. BOUTON DE THÈME (Basé sur votre code)
+   ========================================================================== */
+.theme-toggle input {
+    display: none;
+}
+
+.toggle-track {
+    cursor: pointer;
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-pill);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+
+    /* --- Utilise nos variables de thème --- */
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    transition: all 0.35s ease-in-out;
+}
+
+.toggle-track:hover {
+    background: var(--color-bg-body);
+}
+
+.toggle-svg {
+    width: 100%;
+    height: 100%;
+    color: var(--color-text-primary);
+    /* Couleur du soleil/lune */
+    overflow: visible;
+    transition: all 0.35s ease-in-out;
+}
+
+/* --- Animations (votre code) --- */
+.toggle-clip-path {
+    transition: all 0.35s ease-in-out;
+    transform: translate(0, 0);
+}
+
+.toggle-orb {
+    transform-origin: center center;
+    transition: all 0.35s ease-in-out;
+}
+
+.toggle-rays {
+    stroke-width: 1.5px;
+    transform-origin: center center;
+    transition: all 0.35s ease-in-out;
+}
+
+/* --- État "checked" (Mode Sombre) --- */
+.theme-switch-input:checked+.toggle-track .toggle-clip-path {
+    transform: translate(-11px, 14px);
+}
+
+.theme-switch-input:checked+.toggle-track .toggle-rays {
+    transform: scale(0.5);
+    opacity: 0;
+}
+
+
+/* ==========================================================================
+   5. FOOTER (.site-footer-enhanced)
+   ========================================================================== */
+
+.site-footer-enhanced {
+    background-color: var(--color-bg-nav);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    padding: 3rem 0;
+    font-size: 0.9rem;
+    transition: background-color var(--transition-medium), border-color var(--transition-medium);
+    flex-shrink: 0;
+}
+
+.footer-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    /* Permet de passer à la ligne sur mobile */
+    justify-content: space-between;
+    gap: 2.5rem;
+}
+
+.footer-section {
+    flex: 1 1 200px;
+    /* Base pour que les colonnes s'adaptent */
+}
+
+.footer-links-section h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+}
+
+.footer-links-section ul {
+    list-style: none;
+}
+
+.footer-links-section li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links-section a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+}
+
+@media (hover: hover) {
+    .footer-links-section a:hover {
+        color: var(--theme-accent);
+        text-decoration: underline;
+    }
+}
+
+/* --- Section Marque/Logos --- */
+.footer-brand-section {
+    flex: 1 1 300px;
+    /* Aligne à droite sur les grands écrans si possible */
+    /* Sur mobile, il prendra toute la largeur */
+    text-align: left;
+}
+
+@media (min-width: 768px) {
+    .footer-brand-section {
+        text-align: right;
+    }
+}
+
+.footer-logos-group {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+    .footer-logos-group {
+        justify-content: flex-end;
+    }
+}
+
+.footer-logo {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    image-rendering: -webkit-optimize-contrast;
+}
+
+/* Le logo GEII est visuellement plus petit : on le compense */
+.footer-logo.logo-geii {
+    height: 36px;
+}
+
+html[data-theme="dark"] .footer-logo {
+    opacity: 0.95;
+}
+
+html[data-theme="dark"] .footer-logo.logo-geii {
+    filter: none;
+    opacity: 1;
+}
+
+/* Tablette & mobile */
+@media (max-width: 768px) {
+    .footer-logos-group {
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .footer-logo {
+        height: 55px;
+    }
+
+    .footer-logo.logo-geii {
+        height: 30px;
+    }
+}
+
+.footer-copyright {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   6. COMPOSANTS (Cartes, Boutons, Badges, Alertes)
+   ========================================================================== */
+
+/* --- NOTE: Les variables de couleur ont été déplacées à la Section 1 --- */
+
+/* --- Style de base des cartes --- */
+.card {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+    /* Arrondi plus luxueux */
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    /* Ombre subtile pour un effet "flottant" */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    border-color: var(--theme-accent);
+}
+
+/* Carte statique : pas d'effet de survol (non cliquable) */
+/* xp-card : la carte elle-même n'est pas un lien, seul le bouton "Voir plus" l'est */
+.card--static,
+.card--static:hover,
+.xp-card:hover {
+    transform: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-color: var(--color-border);
+    cursor: default;
+}
+
+html[data-theme="dark"] .card {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+html[data-theme="dark"] .card--static,
+html[data-theme="dark"] .card--static:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-color: var(--color-border);
+}
+
+html[data-theme="dark"] .card:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.card-header {
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+.card-header h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* S'il y a un header, on réduit le padding haut du body */
+.card-header+.card-body {
+    padding-top: 0.5rem;
+}
+
+
+/* --- Styles de boutons --- */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: var(--radius-medium);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    text-align: center;
+    line-height: 1;
+    /* Assure que le texte est bien centré */
+}
+
+/* Style par défaut (Ghost / Outline) - FUSIONNÉ */
+.btn,
+.btn--ghost,
+.btn.ghost,
+.btn.outline {
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    /* Bordure basée sur le thème */
+    color: var(--color-text-primary);
+    /* Texte principal pour un bon contraste */
+}
+
+.btn:hover,
+.btn--ghost:hover,
+.btn.ghost:hover,
+.btn.outline:hover {
+    background-color: var(--color-bg-body);
+    /* Change un peu le fond au survol */
+    border-color: var(--theme-accent);
+    /* Bordure devient accent au survol */
+    color: var(--theme-accent);
+    /* Texte devient accent au survol */
+    text-decoration: none;
+}
+
+/* Modificateur Primaire (Solide) */
+.btn.primary {
+    background-color: var(--theme-accent);
+    border: 1px solid var(--theme-accent);
+    color: #0d1117;
+    /* Texte sombre pour un bon contraste sur le bleu */
+}
+
+.btn.primary:hover {
+    background-color: var(--theme-accent-hover);
+    border-color: var(--theme-accent-hover);
+    color: #0d1117;
+    /* Toujours texte sombre */
+}
+
+/* Modificateur Large */
+.btn.btn-large {
+    padding: 0.9rem 1.75rem;
+    font-size: 1rem;
+}
+
+/* --- Styles de badges & chips --- */
+.badge {
+    padding: 0.25rem 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    /* Empêche le badge de se couper */
+}
+
+.badge-stage {
+    color: var(--color-badge-stage);
+    background-color: var(--color-badge-stage-bg);
+}
+
+.badge-alternance {
+    color: var(--color-badge-alt);
+    background-color: var(--color-badge-alt-bg);
+}
+
+.chip--mini {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    border-radius: var(--radius-small);
+    background-color: var(--color-bg-body);
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+}
+
+/* --- Styles de texte utilitaires --- */
+.muted-text,
+.help {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+}
+
+.help {
+    font-size: 0.9rem;
+}
+
+.help[style*="color: red;"] {
+    color: var(--color-danger) !important;
+    font-weight: 600;
+}
+
+/* --- Loader Spinner (pour le JS) --- */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loader-spinner {
+    margin: 3rem auto;
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--color-border);
+    border-top-color: var(--theme-accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* --- Skeletons de chargement --- */
+.skeleton {
+    background: linear-gradient(90deg, var(--color-bg-alt) 25%, var(--color-border) 50%, var(--color-bg-alt) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: var(--radius-sm);
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skeleton-title { width: 60%; height: 1.5rem; margin-bottom: 0.5rem; }
+.skeleton-company { width: 40%; height: 1rem; margin-bottom: 1rem; }
+.skeleton-text { width: 100%; height: 0.85rem; margin-bottom: 0.5rem; }
+.skeleton-text.short { width: 80%; }
+.skeleton-tag { width: 80px; height: 1.5rem; border-radius: 99px; display: inline-block; margin-right: 0.5rem; }
+.skeleton-card { box-shadow: none; border: 1px solid var(--color-border); pointer-events: none; }
+
+/* --- Alertes (pour le JS) --- */
+.alert {
+    padding: 1rem 1.5rem;
+    margin-top: 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-medium);
+}
+
+.alert ul {
+    margin-top: 0.75rem;
+    padding-left: 1.25rem;
+}
+
+.alert.error {
+    background-color: #fde8e8;
+    border-color: #f9c5c5;
+    color: #a30e0e;
+}
+
+html[data-theme="dark"] .alert.error {
+    background-color: #4a1d1d;
+    border-color: #a30e0e;
+    color: #fde8e8;
+}
+
+.alert.success {
+    background-color: #e8f5e9;
+    border-color: #a5d6a7;
+    color: #1b5e20;
+    border-left: 4px solid #28a745;
+}
+
+html[data-theme="dark"] .alert.success {
+    background-color: #1e3b20;
+    border-color: #2e7d32;
+    color: #c8e6c9;
+    border-left-color: #34c759;
+}
+
+.alert.info {
+    background-color: var(--color-badge-stage-bg);
+    /* Fond bleu clair */
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+    border-left: 4px solid var(--theme-accent);
+}
+
+html[data-theme="dark"] .alert.info {
+    color: var(--color-text-primary);
+    border-left-color: var(--theme-accent);
+}
+
+.alert code {
+    background-color: var(--color-danger-bg);
+    color: var(--color-danger);
+    padding: 0.15rem 0.4rem;
+    border-radius: var(--radius-small);
+    font-family: monospace;
+    font-weight: 600;
+}
+
+html[data-theme="dark"] .alert code {
+    background-color: #000;
+    color: var(--color-danger);
+}
+
+/* ==========================================================================
+   7. STYLES DE PAGE (index.php)
+   ========================================================================== */
+
+/* Conteneur principal de la page d'accueil */
+main.home-wrap {
+    /* Utilise la classe .container qu'on a définie */
+    width: 90%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    /* Ajoute de l'espace en haut/bas */
+
+    /* Sépare les sections verticalement */
+    display: grid;
+    gap: 3rem;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Feedback tactile (Touch) */
+.btn:active,
+.search-result-item:active,
+.m-link:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+}
+
+/* Supprimer le highlight bleu sur mobile */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* --- Carte "Bienvenue" --- */
+.home-hero-card .card-body {
+    padding: 2rem 1.75rem;
+}
+
+.home-hero-card h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+/* --- Section "Dernières expériences" --- */
+.home-section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.home-section-head h2,
+.section-divider-title {
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+}
+
+/* Grille des expériences */
+.latest-grid,
+.annuaire-grid-results {
+    display: grid;
+    gap: 1.5rem;
+    /* Grille responsive : 
+       - auto-fit: crée autant de colonnes que possible
+       - minmax(300px, 1fr): chaque colonne fait au min 300px
+         et partage l'espace (1fr)
+    */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.xp-card {
+    /* Permet au bouton "Voir plus" de rester en bas */
+    display: flex;
+    flex-direction: column;
+}
+
+/* (E) Pousse le body (bouton) en bas de la carte */
+.xp-card__body {
+    margin-top: auto;
+}
+
+.xp-card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* Aligne le badge en haut */
+    gap: 1rem;
+    padding: 1.5rem;
+}
+
+.xp-card__title {
+    display: flex;
+    flex-direction: column;
+}
+
+.xp-card .company {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--color-text-primary);
+    margin-bottom: 0.15rem;
+}
+
+.xp-card .job-title {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+}
+
+.xp-card__body {
+    padding: 0 1.5rem 1.5rem;
+    margin-top: 0.5rem;
+    /* Ligne de séparation subtile */
+    border-top: 1px solid var(--color-border);
+    padding-top: 1rem;
+}
+
+.xp-card__body .btn {
+    width: 100%;
+    /* Le bouton prend toute la largeur */
+}
+
+/* --- Titre "Accès Rapides" --- */
+.section-divider-title {
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    font-size: 1.25rem;
+    margin-top: 1rem;
+    margin-bottom: -1.5rem;
+    /* Réduit l'espace avant la grille */
+}
+
+/* --- Grille "Accès Rapides" --- */
+.quick-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.quick-card {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.quick-card .quick-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+.quick-card__icon {
+    font-size: 2.25rem;
+    line-height: 1;
+    color: var(--theme-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quick-card .quick-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.quick-card .card-body {
+    padding: 0.5rem 1.5rem 1.5rem;
+}
+
+.quick-card .help {
+    margin-bottom: 1.5rem;
+    min-height: 2.7rem;
+    /* Fixe une hauteur pour aligner les boutons */
+}
+
+.quick-card .btn {
+    width: 100%;
+}
+
+/* ==========================================================================
+   8. STYLES DE FORMULAIRES (Générique) - CORRIGÉ
+   ========================================================================== */
+
+.field {
+    margin-bottom: 0;
+}
+
+label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+}
+
+input:not([type]),
+/* Cible les inputs sans attribut 'type' */
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="url"],
+select,
+textarea {
+    width: 100%;
+    background-color: var(--color-input-bg);
+    /* Utilise la variable du thème */
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-medium);
+    font-family: var(--font-main);
+    font-size: 0.95rem;
+    transition: all var(--transition-fast);
+}
+
+input[type="text"]::placeholder,
+input[type="search"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+input[type="tel"]::placeholder,
+input[type="url"]::placeholder,
+textarea::placeholder {
+    color: var(--color-text-secondary);
+    opacity: 0.8;
+}
+
+input:not([type]):focus,
+input[type="text"]:focus,
+input[type="search"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--theme-accent);
+    background-color: var(--color-bg-card);
+    box-shadow: 0 0 0 3px var(--theme-accent-hover);
+}
+
+/* --- Style pour les <select> --- */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236B7280'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.25em 1.25em;
+    padding-right: 2.5rem;
+    /* Espace pour la flèche */
+}
+
+html[data-theme="dark"] select {
+    /* Flèche plus claire pour le mode sombre */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%239CA3AF'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
+}
+
+/* Actions de formulaire génériques */
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+}
+
+/* ==========================================================================
+   9. STYLES DE TABLEAU (pour .companies-table)
+   ========================================================================== */
+
+.companies-table-card .company-grid {
+    overflow-x: auto;
+    /* Permet le défilement horizontal si besoin */
+}
+
+.companies-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.companies-table th,
+.companies-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+    white-space: nowrap;
+    /* Empêche le texte de passer à la ligne */
+    user-select: none; /* Désactive la sélection de texte (fond bleu) au clic */
+}
+
+/* Permet quand même la sélection du texte sur les liens (emails) */
+.companies-table a {
+    user-select: text;
+}
+
+.companies-table th {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --- Styles de tri --- */
+.companies-table th.sortable {
+    cursor: pointer;
+    transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.companies-table th.sortable:hover {
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-hover);
+}
+
+.companies-table th.sorted-asc::after,
+.companies-table th.sorted-desc::after {
+    display: inline-block;
+    margin-left: 0.5em;
+    opacity: 0.8;
+}
+
+.companies-table th.sorted-asc::after {
+    content: '▲';
+}
+
+.companies-table th.sorted-desc::after {
+    content: '▼';
+}
+
+
+/* Pas d'effet hover sur les lignes : elles ne sont pas cliquables */
+
+/* --- Styles des liens dans le tableau --- */
+.table-link,
+.table-link-email,
+.table-link-phone {
+    color: var(--color-text-primary);
+    font-weight: 500;
+}
+
+.table-link:hover,
+.table-link-email:hover,
+.table-link-phone:hover {
+    color: var(--theme-accent);
+    text-decoration: underline;
+}
+
+.table-link-icon {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+}
+
+.table-link-icon:hover {
+    color: var(--theme-accent);
+}
+
+/* ==========================================================================
+   10. STYLES ANNIAURE (Spécifique)
+   ========================================================================== */
+
+/* --- Hero Annuaire (Titre + Bouton Ajouter) --- */
+.annuaire-hero .hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Centre le groupe Titre + Bouton */
+    gap: 3rem;
+    /* Espacement plus grand */
+    flex-wrap: wrap;
+    /* Pour le mobile : passe à la ligne si pas de place */
+    margin-bottom: 2rem;
+}
+
+.annuaire-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--color-text-primary);
+    margin: 0;
+    /* Le titre ne pousse plus vers le bas, on laisse le gap gérer l'espace */
+}
+
+/* Ajustement fin : baisse un peu le bouton pour l'aligner visuellement comme souhaité */
+.annuaire-hero .hero-content .btn {
+    margin-top: 15px;
+}
+
+/* ==========================================================================
+   11. STYLES DE CARTE DE RECHERCHE (Annuaire)
+   ========================================================================== */
+
+/* Un "spacer" pour compenser le header 'sticky' si besoin */
+.header-spacer {
+    height: 2rem;
+}
+
+main.main-annuaire {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto 3rem auto;
+    display: grid;
+    gap: 2.5rem;
+}
+
+.annuaire-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: left;
+    color: var(--color-text-primary);
+    margin-bottom: -1rem;
+    /* Rapproche du bloc de filtres */
+}
+
+/* --- Style générique pour les cartes de l'annuaire --- */
+/* (Réutilise .contact-card de votre HTML) */
+.contact-card {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+html[data-theme="dark"] .contact-card {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.contact-card .header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contact-card .header .title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.contact-card .header .subtitle {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+.contact-card .contact-form {
+    padding: 1.5rem;
+}
+
+/* --- Grille des Filtres --- */
+.annuaire-grid-filters {
+    display: grid;
+    gap: 1rem;
+    /* Optimized layout: 4 equal columns for better filter distribution */
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.annuaire-q-field {
+    /* Le champ "Mot-clé" reste en première position */
+    grid-column: 1 / 2;
+}
+
+.annuaire-filter-actions {
+    border-top: none;
+    padding-top: 0.5rem;
+    margin-top: 0;
+}
+
+/* --- Rayon Row (Ville & Rayon redesign) --- */
+.rayon-row {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.rayon-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+}
+
+.rayon-value-label {
+    color: var(--theme-accent);
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.rayon-slider {
+    width: 100%;
+    accent-color: var(--theme-accent);
+    height: 4px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.rayon-slider:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.rayon-hint {
+    font-size: 0.78rem;
+    color: var(--color-text-secondary);
+    font-style: italic;
+    transition: opacity 0.3s ease;
+}
+
+.rayon-hint.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Span de 2 colonnes pour le champ Ville & Rayon */
+.field-ville-distance {
+    grid-column: span 2;
+}
+
+/* --- Pagination --- */
+.annuaire-pagination {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+    justify-content: space-between;
+    /* Aligne les boutons */
+}
+
+.annuaire-pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: transparent;
+    border-color: var(--color-border);
+    color: var(--color-text-secondary);
+}
+
+.annuaire-pagination button:disabled:hover {
+    background-color: transparent;
+    color: var(--color-text-secondary);
+}
+
+.companies-header-card .title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.companies-header-card .subtitle {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   11. STYLES DE PAGE (ajouter.php)
+   ========================================================================== */
+
+main.main-ajouter {
+    width: 90%;
+    max-width: 900px;
+    margin: 2rem auto 3rem auto;
+    display: grid;
+    gap: 2rem;
+}
+
+.ajouter-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.ajouter-hero .subtitle {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    margin-top: 0.25rem;
+}
+
+.ajouter-card .card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ajouter-card .card-header .title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.ajouter-card .card-header .subtitle {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+.ajouter-card .card-body {
+    padding: 1.5rem;
+}
+
+/* --- Sections du formulaire --- */
+fieldset.form-section {
+    border: none;
+    padding: 0;
+    margin: 0 0 2.5rem 0;
+}
+
+fieldset.form-section:last-of-type {
+    margin-bottom: 0;
+}
+
+legend.form-section-title {
+    display: block;
+    width: 100%;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+    word-break: break-word;
+    /* (D) évite le débordement des longs labels sur mobile */
+}
+
+/* --- Grilles de formulaire --- */
+/* (Basé sur votre <style> en ligne) */
+.form-grid {
+    display: grid;
+    gap: 1rem 1.5rem;
+}
+
+.grid-cols-1 {
+    grid-template-columns: 1fr;
+}
+
+.grid-cols-2 {
+    grid-template-columns: 1fr 1fr;
+}
+
+/* --- Champs, Erreurs, et Aide --- */
+.field textarea {
+    resize: vertical;
+    /* Permet uniquement le redimensionnement vertical */
+    min-height: 120px;
+}
+
+.req {
+    color: var(--color-danger);
+    font-weight: 600;
+    margin-left: 2px;
+}
+
+.error-text {
+    color: var(--color-danger);
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-top: 5px;
+    min-height: 1em;
+    /* Empêche le saut de page */
+}
+
+/* Style pour un champ en erreur (à activer via JS) */
+input.is-invalid,
+select.is-invalid,
+textarea.is-invalid {
+    border-color: var(--color-danger);
+}
+
+input.is-invalid:focus,
+select.is-invalid:focus,
+textarea.is-invalid:focus {
+    border-color: var(--color-danger);
+    box-shadow: 0 0 0 3px var(--color-danger-bg);
+}
+
+
+/* --- Styles pour les boutons de Fichiers --- */
+.doc-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.doc-label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.doc-line {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.doc-btn {
+    flex-shrink: 0;
+    /* Empêche le bouton de rétrécir */
+    padding: 0.5rem 1rem;
+    /* Bouton plus petit */
+}
+
+.doc-filename {
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.doc-filename.is-empty {
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.doc-clear {
+    background: none;
+    border: none;
+    color: var(--color-danger);
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: underline;
+    font-size: 0.85rem;
+    margin-left: auto;
+}
+
+.doc-clear[hidden] {
+    display: none;
+}
+
+/* --- Actions du formulaire --- */
+.ajouter-form-actions,
+.contact-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+}
+
+/* ==========================================================================
+   12. TOAST / FLASH MESSAGES
+   ========================================================================== */
+#toast-container {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 999;
+    display: grid;
+    gap: 1rem;
+    max-width: 350px;
+}
+
+.toast {
+    padding: 1rem 1.5rem;
+    background-color: var(--color-bg-card);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid var(--theme-accent);
+
+    /* Animation */
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.4s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast.success {
+    border-left-color: #28a745;
+    /* Vert succès */
+}
+
+.toast.error {
+    border-left-color: var(--color-danger);
+}
+
+html[data-theme="dark"] .toast {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="dark"] .toast.success {
+    border-left-color: #34c759;
+    /* Vert plus vif */
+}
+
+/* ==========================================================================
+   13. STYLES DE PAGE (aide.php)
+   ========================================================================== */
+
+/* --- Layout principal --- */
+main.main-aide {
+    width: 90%;
+    max-width: 1200px;
+    margin: 2rem auto 3rem auto;
+    display: grid;
+    gap: 2.5rem;
+}
+
+/* --- Section "Héros" (Titre) --- */
+.help-hero {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.help-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.help-hero p {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    margin-top: 0.5rem;
+    max-width: 700px;
+    /* Évite que le sous-titre soit trop large */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- "Chips" de navigation --- */
+.help-chips {
+    display: flex;
+    flex-wrap: wrap;
+    /* Passe à la ligne sur mobile */
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.chip:hover {
+    background-color: var(--color-bg-body);
+    color: var(--color-text-primary);
+    border-color: var(--theme-accent);
+    text-decoration: none;
+}
+
+.chip .ico {
+    font-size: 1.1rem;
+}
+
+/* --- Grille des cartes d'aide --- */
+.aide-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+/* --- Style des cartes d'aide --- */
+.aid-card {
+    /* Utilise display: grid pour placer le bouton "Voir plus" */
+    display: grid;
+    grid-template-columns: 1fr auto;
+    /* Colonne 1: Titre, Colonne 2: Bouton */
+    grid-template-areas:
+        "header button"
+        "body   body";
+    align-items: start;
+    padding: 1.5rem;
+    /* Applique le padding à la carte elle-même */
+}
+
+/* 1. Le header (Titre) */
+.aid-card .card-header {
+    grid-area: header;
+    padding: 0;
+    /* Annule le padding par défaut de .card-header */
+    border-bottom: none;
+    /* Annule la bordure par défaut */
+}
+
+.aid-card .card-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* 2. Le bouton "Voir plus" */
+.aid-action {
+    grid-area: button;
+    padding: 0.5rem 1rem;
+    /* Bouton plus petit */
+    font-size: 0.85rem;
+    margin-left: 1rem;
+    /* Espace par rapport au titre */
+}
+
+/* 3. Le corps de la carte */
+.aid-card .card-body {
+    grid-area: body;
+    padding: 0;
+    /* Annule le padding par défaut */
+    margin-top: 1rem;
+    /* Espace sous la ligne header/bouton */
+}
+
+/* --- Contenu des cartes (listes, etc.) --- */
+.aid-card p {
+    margin-bottom: 1rem;
+    color: var(--color-text-secondary);
+}
+
+.aid-card p em {
+    /* Texte "Lisible, ciblé..." */
+    color: var(--color-text-primary);
+    font-style: italic;
+}
+
+.aid-card ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 1.5rem;
+}
+
+.aid-card li {
+    position: relative;
+    padding-left: 1.75em;
+    /* Espace pour la puce personnalisée */
+    margin-bottom: 0.75rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+/* Puce personnalisée "tech" */
+.aid-card li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.1;
+    color: var(--theme-accent);
+}
+
+.aid-card li strong {
+    color: var(--color-text-primary);
+    font-weight: 500;
+}
+
+/* Liens "Ressources" en bas de carte */
+.aid-card .help {
+    font-size: 0.9rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    /* Pas de marge en fin de carte */
+}
+
+.aid-card .help a {
+    font-weight: 500;
+}
+
+/* Style spécifique pour la carte "Documents utiles" */
+#docs .aid-card .card-body ul {
+    margin-bottom: 0.5rem;
+}
+
+#docs .aid-card .card-body li {
+    padding-left: 0;
+}
+
+#docs .aid-card .card-body li::before {
+    display: none;
+    /* Pas de puce pour la liste de liens */
+}
+
+#docs .aid-card .card-body li a {
+    font-weight: 500;
+    display: block;
+    padding: 0.25rem 0;
+}
+
+/* ==========================================================================
+   14. STYLES DE PAGE (contact.php)
+   ========================================================================== */
+
+main.main-contact {
+    width: 90%;
+    /* Un formulaire de contact est mieux un peu plus étroit */
+    max-width: 800px;
+    margin: 2rem auto 3rem auto;
+    display: grid;
+    gap: 2rem;
+}
+
+/* --- Section "Héros" (similaire à aide.php) --- */
+.contact-hero {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.contact-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.contact-hero p {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    margin-top: 0.5rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Grille du formulaire de contact --- */
+.contact-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.5rem;
+    /* 1rem vertical, 1.5rem horizontal */
+}
+
+/* Classe pour forcer un champ en pleine largeur */
+.contact-field-full {
+    grid-column: 1 / -1;
+}
+
+/* ==========================================================================
+   15. STYLES DE PAGE (404.php)
+   ========================================================================== */
+
+main.main-404 {
+    width: 90%;
+    /* On centre le contenu avec une largeur max */
+    max-width: 700px;
+    margin: 3rem auto 4rem auto;
+}
+
+.error-section {
+    text-align: center;
+}
+
+.robot-gif {
+    width: 100%;
+    max-width: 300px;
+    /* Taille max pour le GIF */
+    margin: 0 auto 2rem auto;
+    border-radius: var(--radius-medium);
+}
+
+.error-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+}
+
+.error-message {
+    font-size: 1.15rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    /* Espace avant les boutons */
+}
+
+.error-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    /* Gère le retour à la ligne si pas de place */
+    margin-bottom: 3rem;
+    /* Espace avant le fun fact */
+}
+
+/* --- Style de la carte "Fun Fact" --- */
+.fun-fact {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+    padding: 1.5rem;
+    text-align: left;
+    /* On repasse en texte à gauche */
+
+    /* Petite bordure d'accent */
+    border-left: 4px solid var(--theme-accent);
+}
+
+.fun-fact p:first-child {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.fun-fact p:last-child {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* Style les <strong> à l'intérieur du fun fact */
+.fun-fact strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   16. STYLES DE PAGE (aide-detail.php)
+   ========================================================================== */
+
+main.main-detail-aide {
+    width: 90%;
+    /* Largeur max pour une bonne lisibilité (type blog) */
+    max-width: 900px;
+    margin: 2rem auto 3rem auto;
+    display: grid;
+    gap: 1.5rem;
+    /* Espace entre le bouton "Retour" et la carte */
+}
+
+/* --- Bouton "Retour" --- */
+.aide-detail-nav .btn {
+    padding: 0.5rem 1rem;
+    /* Bouton plus petit */
+    font-size: 0.9rem;
+}
+
+/* --- Carte de contenu --- 
+.detail-card {
+    /* Le style .card est déjà appliqué 
+}*/
+
+.detail-card .card-header {
+    padding: 2rem;
+    border-bottom: 1px solid var(--color-border);
+    /* Annule les styles .card-header de base */
+    padding-bottom: 2rem;
+}
+
+.detail-card .card-header .title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+}
+
+.detail-card .card-header .subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* --- Corps de l'article --- */
+.detail-card .card-body.detail-content {
+    /* Plus de padding pour un article */
+    padding: 2rem;
+}
+
+.detail-section {
+    margin-bottom: 2.5rem;
+}
+
+.detail-section:last-of-type {
+    margin-bottom: 0;
+}
+
+.detail-section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 1.25rem;
+}
+
+/* --- Style du contenu (listes, liens, etc.) --- */
+.detail-section-content {
+    color: var(--color-text-primary);
+    /* Texte un peu plus sombre que .text-secondary */
+    font-size: 1rem;
+    line-height: 1.7;
+    /* Très important pour la lisibilité */
+}
+
+.detail-section-content p {
+    margin-bottom: 1rem;
+}
+
+.detail-section-content ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 1.5rem;
+}
+
+/* On réutilise les puces de la page d'aide */
+.detail-section-content li {
+    position: relative;
+    padding-left: 1.75em;
+    margin-bottom: 0.75rem;
+    color: var(--color-text-secondary);
+    /* Texte des listes en secondaire */
+}
+
+.detail-section-content li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.1;
+    color: var(--theme-accent);
+}
+
+.detail-section-content strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+.detail-section-content a {
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+.detail-section-content a:hover {
+    color: var(--theme-accent-hover);
+}
+
+/* --- Style de la liste de documents --- */
+.detail-section-content .doc-list li {
+    padding-left: 0;
+    /* Pas de puce '›' */
+    margin-bottom: 0.5rem;
+}
+
+.detail-section-content .doc-list li::before {
+    display: none;
+}
+
+.detail-section-content .doc-list li a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--theme-accent);
+    font-weight: 500;
+}
+
+.detail-section-content .doc-list li a:hover {
+    text-decoration: underline;
+}
+
+.detail-section-content .doc-list .ico {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+}
+
+
+/* --- Section "Voir aussi" --- */
+.detail-see-also {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.detail-see-also h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+}
+
+.detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 0;
+    border-top: none;
+    justify-content: flex-start;
+    /* Aligne à gauche */
+}
+
+.detail-actions .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   17. STYLES DE PAGE (entreprises.php)
+   ========================================================================== */
+
+main.main-entreprises {
+    width: 90%;
+    /* On prend la largeur max pour un tableau */
+    max-width: 1200px;
+    margin: 2rem auto 3rem auto;
+    display: grid;
+    gap: 2rem;
+}
+
+/* --- Section "Héros" (Titre) --- */
+.page-hero {
+    text-align: center;
+}
+
+.page-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.page-hero .subtitle {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    margin-top: 0.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Conteneur du tableau --- */
+.companies-table-card .card-body {
+    padding: 0;
+    /* On colle le tableau aux bords de la carte */
+}
+
+/* Sur grand écran, on remet le padding */
+@media (min-width: 768px) {
+    .companies-table-card .card-body {
+        padding: 0.5rem;
+    }
+}
+
+/* Statut de chargement */
+#tableStatus {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-style: italic;
+}
+
+#tableStatus .alert {
+    text-align: left;
+    font-style: normal;
+}
+
+/* Le conteneur JS pour le tableau */
+.table-container {
+    /* Le style .companies-table (Section 9) 
+       sera appliqué au tableau à l'intérieur */
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ==========================================================================
+   18. STYLES DE PAGE (experiences.php)
+   ========================================================================== */
+
+main.main-experience {
+    width: 90%;
+    max-width: 900px;
+    /* Taille confortable pour la lecture */
+    margin: 2rem auto 3rem auto;
+    display: grid;
+    gap: 2rem;
+}
+
+/* --- Section "Héros" (Titre) --- */
+.experience-hero {
+    text-align: center;
+}
+
+.experience-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    /* (F) line-height réduit pour les titres longs sur mobile */
+}
+
+/* Conteneur pour les chips (Stage, Lille, 2024...) */
+.hero-meta-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+/* Le style .chip est déjà défini (aide.php) et sera utilisé ici */
+
+
+/* --- Carte principale de l'expérience --- */
+.experience-card .card-header {
+    /* Réutilise le style .contact-card .header */
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.experience-card .card-header .title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.experience-card .card-header .subtitle {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+/* --- Grille des détails --- */
+.experience-body-grid {
+    display: grid;
+    /* 2 colonnes par défaut */
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 2rem;
+    /* Espace vertical, Espace horizontal */
+}
+
+/* Style pour un champ d'affichage (pas un input) */
+.experience-body-grid .field {
+    margin-bottom: 0;
+    /* Annule le style .field des formulaires */
+}
+
+.experience-body-grid .field label {
+    /* Style de "label" pour les données affichées */
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.experience-body-grid .field>div {
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    /* Permet aux longues chaînes de caractères de passer à la ligne */
+    word-break: break-word;
+}
+
+.experience-body-grid .field.full-width {
+    grid-column: 1 / -1;
+    /* Prend toute la largeur */
+}
+
+/* Conteneurs pour les chips et boutons dans la grille */
+.chips-container,
+.buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+/* Boutons plus petits pour les liens (CV, PDF, etc.) */
+.buttons-container .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+/* --- Carte des commentaires --- */
+.experience-comments-card .card-header {
+    /* ... (styles identiques à .experience-card .card-header) ... */
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ... (autres styles si nécessaires) ... */
+
+/* --- Liste des commentaires --- */
+#commentsList {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.comment-item {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+#commentsList>.comment-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.comment-meta {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.5rem;
+    word-break: break-all;
+    /* Au cas où un email est long */
+}
+
+.comment-meta strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+.comment-meta a {
+    color: var(--theme-accent);
+}
+
+.comment-body {
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    /* Respecte les sauts de ligne (nl2br) */
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* ==========================================================================
+   19. STYLES DE PAGE (Légal: privacy.php, terms.php)
+   ========================================================================== */
+
+/* On utilise la classe .main-legal (utilisée dans terms.php)
+   et on l'applique aussi à la page privacy.php */
+main.main-legal,
+main.main-annuaire>.legal-hero,
+/* Corrige le sélecteur pour privacy.php */
+main.main-annuaire>.legal-card {
+    width: 90%;
+    max-width: 900px;
+    /* Largeur max de type "blog" */
+    margin: 2rem auto 3rem auto;
+    display: grid;
+    gap: 2rem;
+}
+
+/* Force la largeur max si les éléments sont DANS .main-annuaire */
+main.main-annuaire>.legal-hero,
+main.main-annuaire>.legal-card {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Section "Héros" (Titre) --- */
+.legal-hero {
+    text-align: left;
+    /* Titre à gauche pour les pages légales */
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.legal-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.legal-hero .subtitle {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    margin-top: 0.5rem;
+}
+
+/* --- Contenu de la carte légale --- */
+.legal-card .card-body {
+    padding: 2rem;
+    font-size: 1rem;
+    line-height: 1.7;
+    /* Hauteur de ligne pour la lisibilité */
+    color: var(--color-text-secondary);
+    /* Texte par défaut en gris foncé */
+}
+
+/* Titres H2 (ex: "Données Collectées") */
+.legal-card h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.legal-card h2:first-of-type {
+    margin-top: 0;
+    /* Pas de marge pour le premier titre */
+}
+
+.legal-card p {
+    margin-bottom: 1.25rem;
+}
+
+.legal-card p:last-child {
+    margin-bottom: 0;
+}
+
+.legal-card p i {
+    /* Pour la date de mise à jour */
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
+.legal-card ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 1.5rem;
+}
+
+.legal-card li {
+    position: relative;
+    padding-left: 1.75em;
+    /* Espace pour la puce */
+    margin-bottom: 0.75rem;
+}
+
+/* Puce personnalisée (la même que aide-detail.php) */
+.legal-card li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.1;
+    color: var(--theme-accent);
+}
+
+.legal-card li strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+.legal-card a {
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+.legal-card a:hover {
+    color: var(--theme-accent-hover);
+}
+
+/* ==========================================================================
+   20. STYLES DE PAGE (sitemap.php)
+   ========================================================================== */
+
+main.main-sitemap {
+    width: 90%;
+    /* On utilise la même largeur max que les pages de contenu */
+    max-width: 900px;
+    margin: 2rem auto 3rem auto;
+    display: grid;
+    gap: 2rem;
+}
+
+/* --- Section "Héros" (Titre) --- */
+.sitemap-hero {
+    /* Style identique à .legal-hero */
+    text-align: left;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.sitemap-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.sitemap-hero .subtitle {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    margin-top: 0.5rem;
+}
+
+/* --- Carte du plan du site --- */
+.sitemap-card .card-body {
+    padding: 2rem;
+}
+
+.sitemap-grid {
+    display: grid;
+    /* 2 colonnes qui s'adaptent */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem 2.5rem;
+    /* Espace vertical, Espace horizontal */
+}
+
+.sitemap-section h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 1.25rem;
+}
+
+.sitemap-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+    /* Espace entre chaque lien */
+}
+
+.sitemap-section a {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--theme-accent);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.sitemap-section a:hover {
+    color: var(--theme-accent-hover);
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   21. STYLES ADMIN (login.php, etc.)
+   ========================================================================== */
+
+/* --- Helper: Pour les <label> "sr-only" --- */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* --- Mise en page de la page de connexion --- */
+.main-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1.5rem;
+    /* Applique le fond sombre du body que l'on a défini */
+    background-color: var(--color-bg-body);
+    font-family: var(--font-main);
+}
+
+/* --- Carte de connexion --- */
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    /* Largeur max de la carte */
+    padding: 2.5rem 2rem;
+    /* La classe .card gère déjà le fond et la bordure */
+}
+
+.login-card h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* --- Formulaire --- */
+.login-form {
+    display: grid;
+    gap: 1.25rem;
+    /* Espace entre les champs */
+}
+
+/* Les .field, input, et .alert sont déjà stylisés ! */
+
+/* Bouton de connexion */
+.login-button {
+    width: 100%;
+    /* Bouton pleine largeur */
+    padding: 0.85rem 1.5rem;
+    /* Bouton un peu plus grand */
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    /* Espace au-dessus du bouton */
+}
+
+/* ==========================================================================
+   22. STYLES ADMIN (Dashboard, Tables, Formulaires)
+   ========================================================================== */
+
+/* --- Layout de base de l'admin --- */
+.admin-main {
+    max-width: 1200px;
+    margin: 1.5rem auto 3rem auto;
+    padding: 0 1.5rem;
+    flex-grow: 1;
+}
+
+/* Cache le header public sur les pages admin */
+body:has(.admin-main) .site-header,
+body:has(.admin-main) .header-spacer {
+    display: none !important;
+}
+
+/* --- Header Admin --- */
+.admin-header {
+    padding: 1.5rem 2rem;
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: box-shadow var(--transition-fast);
+}
+
+html[data-theme="dark"] .admin-header {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.admin-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.admin-header .subtitle {
+    margin: 0.25rem 0 0 0;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+}
+
+.admin-header .subtitle strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+/* Actions groupées du header admin */
+.admin-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* --- Barre d'outils (recherche, ajout) --- */
+.toolbar {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.toolbar form {
+    display: flex;
+    gap: 0.75rem;
+    flex: 1 1 300px;
+    /* Prend la place, mais peut se réduire */
+}
+
+/* --- Reset des éléments de formulaire Admin --- */
+/* On unifie le style des boutons et inputs de l'admin */
+.admin-main input[type="text"],
+.admin-main input[type="search"],
+.admin-main input[type="password"],
+.admin-main input[type="email"],
+.admin-main input[type="tel"],
+.admin-main select {
+    height: 42px;
+    padding: 0 0.875rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background-color: var(--color-input-bg);
+    color: var(--color-text-primary);
+    font-size: 0.9rem;
+    font-family: var(--font-main);
+    transition: all var(--transition-fast);
+}
+
+.admin-main input[type="text"]:focus,
+.admin-main input[type="search"]:focus {
+    outline: none;
+    border-color: var(--theme-accent);
+    background-color: var(--color-bg-card);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-accent) 20%, transparent);
+}
+
+/* Spinner de chargement (Pro Search) */
+.admin-main input[type="search"].is-loading,
+.hdr-search input[type="search"].is-loading {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cstyle%3E.spinner_b2T7%7Banimation:spinner_xe7Q .8s linear infinite%7D@keyframes spinner_xe7Q%7B100%25%7Btransform:rotate(360deg)%7D%7D%3C/style%3E%3Cpath d='M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z' opacity='.25'/%3E%3Cpath d='M12,4a8,8,0,0,1,7.89,6.7 1.5,1.5,0,0,0,1.49,1.3 1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-10.72-9.48 1.5,1.5,0,0,0-1.48,1.75A1.5,1.5,0,0,0,12,4Z' class='spinner_b2T7'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+}
+
+/* Thème sombre : Spinner blanc/clair */
+html[data-theme="dark"] .hdr-search input[type="search"].is-loading {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 24 24'%3E%3Cstyle%3E.spinner_b2T7%7Banimation:spinner_xe7Q .8s linear infinite%7D@keyframes spinner_xe7Q%7B100%25%7Btransform:rotate(360deg)%7D%7D%3C/style%3E%3Cpath d='M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z' opacity='.25'/%3E%3Cpath d='M12,4a8,8,0,0,1,7.89,6.7 1.5,1.5,0,0,0,1.49,1.3 1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-10.72-9.48 1.5,1.5,0,0,0-1.48,1.75A1.5,1.5,0,0,0,12,4Z' class='spinner_b2T7'/%3E%3C/svg%3E");
+}
+
+.admin-main .toolbar input {
+    flex: 1;
+    /* Le champ de recherche prend la place */
+}
+
+/* --- Style des boutons Admin (.btn-sm) --- */
+.admin-main .btn-sm,
+.admin-main button:not(.kebab-trigger):not(.kebab-item):not(.theme-switch-input) {
+    height: 42px;
+    padding: 0 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background-color: var(--color-bg-card);
+    color: var(--color-text-primary);
+    font-size: 0.875rem;
+    font-family: var(--font-main);
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none !important;
+    line-height: 1;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.admin-main .btn-sm:hover,
+.admin-main button:not(.kebab-trigger):not(.kebab-item):not(.theme-switch-input):hover {
+    border-color: var(--color-text-secondary);
+    background-color: var(--color-bg-body);
+}
+
+.admin-main .btn-sm svg,
+.admin-main button:not(.kebab-trigger):not(.kebab-item):not(.theme-switch-input) svg {
+    flex-shrink: 0;
+}
+
+/* Bouton Ghost (transparent, texte uniquement) */
+.admin-main .btn-ghost {
+    background: transparent;
+    border-color: transparent;
+    color: var(--color-text-secondary);
+}
+
+.admin-main .btn-ghost:hover {
+    background: var(--color-bg-body);
+    color: var(--color-text-primary);
+    border-color: var(--color-border);
+}
+
+/* Bouton Primary (accent plein) */
+.admin-main .btn-primary {
+    background-color: var(--theme-accent);
+    color: #fff;
+    border-color: var(--theme-accent);
+    box-shadow: 0 1px 3px color-mix(in srgb, var(--theme-accent) 30%, transparent);
+}
+
+html[data-theme="light"] .admin-main .btn-primary {
+    color: #0d1117;
+}
+
+.admin-main .btn-primary:hover {
+    background-color: var(--theme-accent-hover);
+    border-color: var(--theme-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px color-mix(in srgb, var(--theme-accent) 25%, transparent);
+}
+
+/* Bouton Success (vert) */
+.admin-main .btn-success {
+    background-color: #059669;
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 1px 3px rgba(5, 150, 105, 0.25);
+}
+
+.admin-main .btn-success:hover {
+    background-color: #047857;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(5, 150, 105, 0.2);
+}
+
+/* Bouton Danger (rouge plein) */
+.admin-main .btn-danger {
+    background-color: var(--color-danger);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 1px 3px rgba(239, 68, 68, 0.2);
+}
+
+.admin-main .btn-danger:hover {
+    background-color: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(239, 68, 68, 0.2);
+}
+
+/* Bouton Danger Outline (contour rouge, fond transparent) */
+.admin-main .btn-danger-outline {
+    background: transparent;
+    color: var(--color-danger);
+    border-color: color-mix(in srgb, var(--color-danger) 40%, transparent);
+}
+
+.admin-main .btn-danger-outline:hover {
+    background: color-mix(in srgb, var(--color-danger) 10%, transparent);
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+}
+
+/* --- Conteneur de tableau --- */
+.tbl-container {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+    overflow: hidden;
+    background-color: var(--color-bg-card);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    margin-bottom: 2.5rem;
+}
+
+html[data-theme="dark"] .tbl-container {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Tableaux Admin --- */
+.admin-main table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-main th,
+.admin-main td {
+    padding: 0.9rem 1.15rem;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.9rem;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.admin-main th {
+    background-color: color-mix(in srgb, var(--color-bg-body) 50%, var(--color-bg-card));
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.6px;
+}
+
+html[data-theme="dark"] .admin-main th {
+    background-color: color-mix(in srgb, var(--color-bg-card), #000 8%);
+}
+
+.admin-main tr:last-child td {
+    border-bottom: none;
+}
+
+/* Hover sur les lignes du tableau */
+.admin-main tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.admin-main tbody tr:hover td {
+    background-color: color-mix(in srgb, var(--theme-accent) 4%, var(--color-bg-card));
+}
+
+html[data-theme="dark"] .admin-main tbody tr:hover td {
+    background-color: color-mix(in srgb, var(--theme-accent) 6%, var(--color-bg-card));
+}
+
+/* Colonne "Actions" : On cible le wrapper interne, pas le TD ! */
+.admin-main .actions-flex {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    justify-content: flex-start;
+}
+
+/* Ajuste le padding de la cellule Actions pour un alignement parfait */
+.admin-main td.actions {
+    padding: 0.5rem 1rem;
+    vertical-align: middle;
+}
+
+/* Empêche le formulaire "delete" de casser la ligne */
+.admin-main .actions form {
+    display: inline-block;
+    margin: 0;
+}
+
+/* "Chip" Admin */
+.admin-main .chip {
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* === KEBAB MENU === */
+.col-menu {
+    width: 50px;
+    text-align: center;
+}
+
+.td-menu {
+    padding: 0 !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.kebab-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.kebab-trigger {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    color: var(--color-text-secondary);
+    border-radius: var(--radius-small);
+    transition: all 0.2s ease;
+    height: auto !important;
+}
+
+.kebab-trigger:hover {
+    color: var(--color-text-primary);
+    background: var(--color-bg-body);
+}
+
+.kebab-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    transform: translateX(-10px);
+    top: 100%;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    z-index: 9999;
+    min-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+html[data-theme="dark"] .kebab-dropdown {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Force table to allow overflow for dropdowns */
+.tbl-container {
+    overflow: visible !important;
+}
+
+.admin-main table {
+    position: relative;
+}
+
+.td-menu {
+    position: relative;
+    overflow: visible !important;
+}
+
+.kebab-dropdown.is-open {
+    display: block;
+    animation: kebab-fade-in 0.15s ease-out;
+}
+
+@keyframes kebab-fade-in {
+    from {
+        opacity: 0;
+        transform: translateX(-10px) translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-10px) translateY(0);
+    }
+}
+
+.kebab-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.7rem 1rem;
+    text-align: left;
+    background: none;
+    border: none;
+    border-left: 3px solid transparent;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.15s ease;
+    font-weight: 500;
+    gap: 0.5rem;
+    height: auto !important;
+}
+
+.kebab-item:hover {
+    background: var(--color-bg-body);
+    padding-left: 1.15rem;
+}
+
+.kebab-approve {
+    color: #059669;
+}
+
+.kebab-approve:hover {
+    background: color-mix(in srgb, #059669 8%, transparent);
+    border-left-color: #059669;
+    color: #059669;
+}
+
+.kebab-delete {
+    color: var(--color-danger);
+}
+
+.kebab-delete:hover {
+    background: color-mix(in srgb, var(--color-danger) 10%, transparent);
+    border-left-color: var(--color-danger);
+    color: var(--color-danger);
+}
+
+/* Style spécifique pour Modifier (neutre) */
+.kebab-item:not(.kebab-approve):not(.kebab-delete):hover {
+    background: color-mix(in srgb, var(--theme-accent) 8%, transparent);
+    color: var(--theme-accent);
+    border-left-color: var(--theme-accent);
+}
+
+
+/* Titres de section */
+.pending-section h2,
+.admin-main section>h2 {
+    margin-bottom: 1.25rem;
+    font-size: 1.35rem;
+    color: var(--color-text-primary);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+/* Badge de compteur (dans les titres h2) */
+.admin-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.75rem;
+    height: 1.75rem;
+    padding: 0 0.5rem;
+    background: color-mix(in srgb, var(--color-danger) 12%, transparent);
+    color: var(--color-danger);
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+    vertical-align: middle;
+    margin-left: 0.5rem;
+}
+
+/* --- Messages Flash (Alertes Admin) --- */
+.flash-message {
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-medium);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.flash-message.success {
+    background-color: color-mix(in srgb, #059669 12%, transparent);
+    border-color: #34d399;
+    color: #059669;
+}
+
+html[data-theme="dark"] .flash-message.success {
+    background-color: #064e3b;
+    border-color: #34d399;
+    color: #a7f3d0;
+}
+
+.flash-message.error {
+    background-color: color-mix(in srgb, var(--color-danger) 10%, transparent);
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+}
+
+html[data-theme="dark"] .flash-message.error {
+    background-color: #7f1d1d;
+    border-color: #ef4444;
+    color: #fecaca;
+}
+
+/* ===================================================================
+   STAT CARDS (Dashboard)
+   =================================================================== */
+
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    background: var(--color-bg-card);
+    padding: 1.5rem;
+    border-radius: var(--radius-large);
+    text-align: center;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="dark"] .stat-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+html[data-theme="dark"] .stat-card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.stat-card--danger {
+    border-color: color-mix(in srgb, var(--color-danger) 40%, transparent);
+}
+
+/* Icône ronde dans la stat card */
+.stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.25rem;
+}
+
+.stat-icon--accent {
+    background: color-mix(in srgb, var(--theme-accent) 12%, transparent);
+    color: var(--theme-accent);
+}
+
+.stat-icon--danger {
+    background: color-mix(in srgb, var(--color-danger) 12%, transparent);
+    color: var(--color-danger);
+}
+
+.stat-icon--purple {
+    background: color-mix(in srgb, #8b5cf6 12%, transparent);
+    color: #8b5cf6;
+}
+
+html[data-theme="dark"] .stat-icon--purple {
+    background: color-mix(in srgb, #a78bfa 15%, transparent);
+    color: #a78bfa;
+}
+
+.stat-icon--green {
+    background: color-mix(in srgb, #10b981 12%, transparent);
+    color: #10b981;
+}
+
+html[data-theme="dark"] .stat-icon--green {
+    background: color-mix(in srgb, #34d399 15%, transparent);
+    color: #34d399;
+}
+
+.stat-icon--amber {
+    background: color-mix(in srgb, #f59e0b 12%, transparent);
+    color: #f59e0b;
+}
+
+html[data-theme="dark"] .stat-icon--amber {
+    background: color-mix(in srgb, #fbbf24 15%, transparent);
+    color: #fbbf24;
+}
+
+.stat-value {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+.stat-card--danger .stat-value {
+    color: var(--color-danger);
+}
+
+.stat-label {
+    color: var(--color-text-secondary);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.75px;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   24. STYLES RECHERCHE GLOBALE (Dropdown)
+   ========================================================================== */
+
+/* Item de résultat : Propre, aéré, minimaliste */
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1.25rem;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color 0.1s ease;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover,
+.search-result-item:focus,
+.search-result-item.active {
+    background-color: var(--color-bg-body);
+    text-decoration: none;
+    outline: none;
+}
+
+/* Sélection active (Clavier) : Bandeau coloré léger à gauche ou couleur de fond différente */
+.search-result-item.active {
+    background-color: var(--color-bg-body);
+    border-left: 3px solid var(--theme-accent);
+    padding-left: calc(1.25rem - 3px);
+    /* Comprise fit */
+}
+
+/* Surlignage du texte (strong) */
+.res-title strong {
+    color: var(--theme-accent);
+    font-weight: 700;
+}
+
+/* Message "Aucun résultat" */
+.search-no-result {
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+/* Icone : Rond, discret, gris par défaut */
+.res-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 1.1rem;
+    background-color: var(--color-bg-body);
+    border-radius: 50%;
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+}
+
+.search-result-item:hover .res-icon {
+    background-color: var(--color-bg-card);
+    color: var(--theme-accent);
+    transform: scale(1.05);
+}
+
+/* Contenu texte */
+.res-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.res-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    line-height: 1.3;
+}
+
+/* Sous-titre (Ville, "Voir plus"...) : plus discret */
+.res-sub {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    margin-top: 1px;
+    opacity: 0.8;
+}
+
+/* Badge type (à droite) : TRÈS DISCRET ou caché si redundante */
+.res-type {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.4;
+}
+
+/* ==========================================================================
+   23. STYLES ADMIN (Formulaire: edit.php)
+   ========================================================================== */
+
+/* --- Layout Général du formulaire d'édition (similaire à contact.php) --- */
+main.main-edit {
+    width: 90%;
+    max-width: 700px;
+    /* Plus compact que le 900px précédent */
+    margin: 2rem auto 3rem auto;
+    display: flex;
+    /* Utilise flexbox pour le centrage du contenu dans la carte */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1.5rem;
+    /* Espace entre les éléments à l'intérieur de la carte */
+}
+
+.edit-hero {
+    display: none;
+    /* Cache le grand titre qui est maintenant dans la carte */
+}
+
+/* Le conteneur .card englobe tout, donc on stylise son contenu directement */
+.edit-form-card .card-body {
+    padding: 2.5rem;
+    /* Un peu plus d'espace */
+}
+
+.edit-form .form-title {
+    font-size: 1.75rem;
+    /* Plus petit que le h1 de la section */
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.edit-form .form-description {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    text-align: center;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+/* Espacement entre les groupes de champs (anciens fieldsets) */
+.edit-form>.form-grid {
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+/* Pas de bordure pour la première section de champs */
+.edit-form>.form-grid:first-of-type {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+
+/* --- Styles spécifiques (depuis votre <style>) --- */
+
+/* Checkbox "Approuver" */
+.field-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    /* Conserve l'espacement */
+}
+
+.field-checkbox label {
+    margin-bottom: 0;
+    /* Annule le style de .field > label */
+    font-weight: 500;
+}
+
+.field-checkbox input[type="checkbox"] {
+    width: 1.15em;
+    height: 1.15em;
+    accent-color: var(--theme-accent);
+}
+
+/* Gestion des fichiers (Fichier Actuel) */
+.file-management-item {
+    margin-bottom: 1.25rem;
+}
+
+.file-management-item label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    display: block;
+    /* S'assure que le label est sur sa propre ligne */
+    margin-bottom: 0.5rem;
+}
+
+.file-management-item .current-file {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    display: block;
+    margin: 0.25rem 0 0.5rem 0;
+    word-break: break-all;
+    /* Gère les chemins de fichiers longs */
+}
+
+.file-management-item .current-file.none {
+    font-style: italic;
+}
+
+.file-management-item .current-file code {
+    padding: 0.2rem 0.4rem;
+    background: var(--color-bg-body);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-small);
+    font-family: monospace;
+    color: var(--color-text-primary);
+}
+
+.file-management-item .current-file a {
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+/* --- Boutons d'actions --- */
+.edit-form-actions {
+    /* Réutilise le style .actions */
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    /* Plus d'espace au-dessus des boutons */
+    padding-top: 1.5rem;
+    /* Bordure plus rapprochée */
+    border-top: 1px solid var(--color-border);
+}
+
+.edit-form-actions .btn {
+    /* Réutilise .btn, .primary, .outline */
+    font-size: 1rem;
+    padding: 0.85rem 1.5rem;
+}
+
+/* ==========================================================================
+   24. STYLES ADMIN (Auto-complétion)
+   ========================================================================== */
+
+/* 1. On s'assure que le formulaire peut positionner les résultats */
+.hdr-search {
+    position: relative;
+    flex-grow: 1;
+    /* Permet au formulaire de prendre l'espace disponible */
+    max-width: 300px;
+    /* Limite la largeur max si le header est très large */
+}
+
+/* 2. Le conteneur des résultats (caché par défaut) */
+.search-results {
+    display: none;
+    /* Caché par défaut */
+    position: absolute;
+    top: 75%;
+    /* Juste en dessous de la barre de recherche */
+    left: 0;
+    /* Ancré à gauche */
+    right: 0;
+    /* Ancré à droite pour prendre toute la largeur du parent */
+    width: auto;
+    /* Supprime le width: 100% qui peut être parfois capricieux avec left/right */
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-top: none;
+    /* Le haut est collé à l'input */
+    border-radius: 0 0 var(--radius-medium) var(--radius-medium);
+    z-index: 10;
+    overflow: hidden;
+    /* Pour les coins arrondis */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Quand il est ouvert par le JS */
+.search-results.is-open {
+    display: block;
+}
+
+/* 3. Le style d'un lien de résultat */
+.search-result-item {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.search-result-item:hover {
+    background-color: var(--color-bg-body);
+    color: var(--color-text-primary);
+    text-decoration: none;
+}
+
+.hdr-search input[type="search"].suggestions-open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* ==========================================================================
+   15. RESPONSIVE (Mobile)
+   ========================================================================== */
+
+/* ~900px est un bon point de rupture pour les navigations */
+@media (max-width: 900px) {
+
+    /* --- Header mobile --- */
+    .site-header {
+        padding: 0.75rem 0;
+    }
+
+    .hdr-inner {
+        gap: 0.75rem;
+    }
+
+    .hdr-brand .title {
+        font-size: 1rem;
+        line-height: 1.2;
+    }
+
+    .hdr-brand .subtitle {
+        font-size: 0.7rem;
+    }
+
+    /* --- On cache la nav desktop et la recherche --- */
+    .hdr-nav,
+    .hdr-search {
+        display: none;
+    }
+
+    /* --- On affiche le burger (B: touch target 44x44px WCAG) --- */
+    .hdr-burger {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 44px;
+        height: 44px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 7px;
+        /* Padding interne pour agrandir la zone cliquable sans agrandir visuellement les barres */
+        z-index: 205;
+        position: relative;
+    }
+
+    .hdr-burger span {
+        width: 30px;
+        height: 3px;
+        background: var(--color-text-primary);
+        border-radius: 3px;
+        transition: all var(--transition-medium);
+        transform-origin: 3px 1.5px;
+    }
+
+    /* --- Animation du burger en croix --- */
+    .hdr-burger.is-open span:nth-child(1) {
+        transform: rotate(45deg);
+    }
+
+    .hdr-burger.is-open span:nth-child(2) {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+
+    .hdr-burger.is-open span:nth-child(3) {
+        transform: rotate(-45deg);
+    }
+
+    /* --- Menu mobile --- */
+    .hdr-mobile {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: var(--color-bg-nav);
+        border-right: 1px solid var(--color-border);
+        padding: 4rem 1.25rem 3rem;
+        /* Padding bottom augmenté pour éviter les barres de navigation mobiles iOS/Android */
+
+        transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), visibility 0s linear 0.3s;
+        transform: translateX(-100%);
+        visibility: hidden;
+        height: 100dvh;
+        width: 85%;
+        max-width: 320px;
+        z-index: 200;
+        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+    }
+
+    .hdr-mobile.is-open {
+        transform: translateX(0);
+        visibility: visible;
+        transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+
+    /* Backdrop flouté via body class */
+    body.mobile-menu-open::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 90;
+        animation: fade-backdrop 0.3s ease-out;
+    }
+
+    @keyframes fade-backdrop {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* --- Recherche mobile dans le burger --- */
+    .mobile-search {
+        margin-bottom: 0.75rem;
+    }
+
+    .mobile-search input[type="search"] {
+        width: 100%;
+        background-color: var(--color-input-bg);
+        border: 1px solid var(--color-border);
+        color: var(--color-text-primary);
+        padding: 0.75rem 1rem;
+        border-radius: var(--radius-medium);
+        font-family: var(--font-main);
+        font-size: 16px;
+        /* Empêche le zoom iOS */
+    }
+
+    .mobile-search input[type="search"]::placeholder {
+        color: var(--color-text-secondary);
+    }
+
+    .mobile-search input[type="search"]:focus {
+        outline: none;
+        border-color: var(--theme-accent);
+        box-shadow: 0 0 0 2px var(--theme-accent-hover);
+    }
+
+    /* --- Liens du menu mobile (touch-friendly avec stagger animation) --- */
+    .hdr-mobile .m-link {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        padding: 0.85rem 1rem;
+        border-radius: var(--radius-medium);
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+
+        /* État initial pour l'animation d'entrée */
+        opacity: 0;
+        transform: translateX(-15px);
+        transition: color var(--transition-fast), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Quand le menu est ouvert, les liens apparaissent en cascade */
+    .hdr-mobile.is-open .m-link {
+        opacity: 1;
+        transform: translateX(0);
+        /* La variable CSS --i est injectée en HTML */
+        transition-delay: calc(0.1s + (var(--i, 0) * 0.05s));
+    }
+
+    .hdr-mobile .m-link:hover,
+    .hdr-mobile .m-link:active {
+        background-color: var(--color-bg-body);
+        text-decoration: none;
+    }
+
+    /* --- Touch targets : boutons --- */
+    .btn {
+        padding: 0.85rem 1.25rem;
+        min-height: 44px;
+        font-size: 0.95rem;
+    }
+
+    /* --- Header spacer réduit --- */
+    .header-spacer {
+        height: 1rem;
+    }
+
+    /* --- Footer mobile centré --- */
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-section {
+        flex: 1 1 auto;
+        width: 100%;
+    }
+
+    .footer-links-section h4 {
+        text-align: center;
+    }
+
+    .footer-links-section ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-brand-section,
+    .footer-brand-section .footer-logos-group {
+        text-align: center;
+        justify-content: center;
+    }
+
+    .footer-copyright {
+        text-align: center;
+    }
+
+    /* --- Page d'accueil --- */
+    main.home-wrap {
+        margin: 1rem auto;
+        gap: 1.5rem;
+    }
+
+    .home-hero-card .card-body {
+        padding: 1.25rem;
+    }
+
+    .home-section-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .home-hero-card h2 {
+        font-size: 1.4rem;
+    }
+
+    .home-section-head h2,
+    .section-divider-title {
+        font-size: 1.2rem;
+    }
+
+    .section-divider-title {
+        margin-bottom: -0.5rem;
+    }
+
+    .quick-card .help {
+        min-height: auto;
+    }
+
+    /* --- Réduire le padding des cartes (mais garder de l'air) --- */
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .card-header {
+        padding: 1.15rem 1.15rem 0.5rem;
+    }
+
+    .xp-card__head {
+        padding: 1.15rem;
+    }
+
+    .xp-card__body {
+        padding: 0 1.15rem 1.15rem;
+    }
+
+    /* --- Page Annuaire --- */
+    .annuaire-hero h1 {
+        font-size: 1.6rem;
+        margin-bottom: 0;
+    }
+
+    .annuaire-hero .subtitle {
+        font-size: 0.9rem;
+    }
+
+    .annuaire-hero .hero-content {
+        gap: 1rem;
+    }
+
+    .annuaire-grid-filters {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .annuaire-q-field {
+        grid-column: 1 / -1;
+    }
+
+    .field-ville-distance {
+        grid-column: 1 / -1;
+    }
+
+    .annuaire-filter-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .annuaire-filter-actions .btn {
+        width: 100%;
+    }
+
+    /* --- Formulaires anti-zoom iOS --- */
+    input:not([type]),
+    input[type="text"],
+    input[type="search"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"],
+    input[type="url"],
+    select,
+    textarea {
+        font-size: 16px;
+    }
+
+    /* --- Tableau responsive (Mode Stacking) --- */
+    .companies-table {
+        border: 0;
+    }
+
+    .companies-table thead {
+        display: none;
+    }
+
+    .companies-table tr {
+        display: block;
+        border-bottom: 2px solid var(--theme-accent);
+        margin-bottom: 1.5rem;
+    }
+
+    .companies-table td {
+        display: block;
+        text-align: right;
+        font-size: 0.95rem;
+        border-bottom: 1px dotted var(--color-border);
+        white-space: normal;
+    }
+
+    .companies-table td:last-child {
+        border-bottom: 0;
+    }
+
+    .companies-table td::before {
+        content: attr(data-label);
+        float: left;
+        font-weight: 600;
+        color: var(--color-text-primary);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+    }
+
+    /* --- Page Ajouter --- */
+    main.main-ajouter {
+        margin: 1rem auto 2rem auto;
+    }
+
+    .ajouter-hero h1 {
+        font-size: 1.6rem;
+    }
+
+    .ajouter-hero .subtitle {
+        font-size: 0.95rem;
+    }
+
+    .grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .ajouter-card .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .doc-line {
+        flex-wrap: wrap;
+    }
+
+    .doc-filename {
+        flex-basis: 100%;
+        order: 3;
+        margin-top: -0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .doc-clear {
+        order: 2;
+    }
+
+    .doc-btn {
+        order: 1;
+    }
+
+    /* --- Page Aide --- */
+    .help-hero h1 {
+        font-size: 1.6rem;
+    }
+
+    .aid-card {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "button"
+            "body";
+        padding: 1.25rem;
+    }
+
+    .aid-card .card-header {
+        padding-bottom: 0.5rem;
+    }
+
+    .aid-action {
+        width: max-content;
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+
+    .aid-card .card-body {
+        margin-top: 1.5rem;
+    }
+
+    /* --- Page Contact --- */
+    .contact-hero h1 {
+        font-size: 1.6rem;
+    }
+
+    /* Grille de contact : 2 colonnes → 1 colonne sur mobile */
+    .contact-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* --- Actions de formulaire --- */
+    .ajouter-form-actions,
+    .contact-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .ajouter-form-actions .btn,
+    .contact-form-actions .btn {
+        width: 100%;
+    }
+
+    .contact-field-full {
+        grid-column: 1 / -1;
+    }
+
+    /* --- Toast container mobile : centré en bas --- */
+    #toast-container {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        max-width: none;
+    }
+
+    /* --- Scroll-to-top : éviter l'overlap avec la barre Safari --- */
+    .scroll-to-top {
+        bottom: 1.25rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+    }
+
+    /* --- Header brand : éviter le débordement --- */
+    .hdr-brand {
+        overflow: hidden;
+        min-width: 0;
+    }
+
+    .hdr-brand .title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* --- Zone de dépôt fichier : plus compacte sur mobile --- */
+    .upload-dropzone {
+        padding: 1.25rem 1rem;
+    }
+
+    /* --- Page 404 --- */
+    main.main-404 {
+        margin: 2rem auto 3rem auto;
+    }
+
+    .error-title {
+        font-size: 1.8rem;
+    }
+
+    .error-message {
+        font-size: 1rem;
+    }
+
+    .error-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .error-actions .btn {
+        width: 100%;
+    }
+
+    /* --- Page Aide détail --- */
+    main.main-detail-aide {
+        margin: 1.5rem auto 2rem auto;
+        gap: 1rem;
+    }
+
+    .detail-card .card-header {
+        padding: 1.25rem;
+        padding-bottom: 1.25rem;
+    }
+
+    .detail-card .card-header .title {
+        font-size: 1.6rem;
+    }
+
+    .detail-card .card-header .subtitle {
+        font-size: 1rem;
+    }
+
+    .detail-card .card-body.detail-content {
+        padding: 1.25rem;
+    }
+
+    .detail-section h2 {
+        font-size: 1.2rem;
+    }
+
+    /* --- Page Entreprises --- */
+    main.main-entreprises {
+        margin: 1.5rem auto 2rem auto;
+    }
+
+    .page-hero h1 {
+        font-size: 1.6rem;
+    }
+
+    .page-hero .subtitle {
+        font-size: 0.95rem;
+    }
+
+    /* --- Page Expérience --- */
+    .experience-hero h1 {
+        font-size: 1.6rem;
+    }
+
+    .experience-card .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .experience-card .card-header .title {
+        font-size: 1.4rem;
+        margin-bottom: 0;
+    }
+
+    .experience-card .card-header .btn {
+        width: 100%;
+        margin-top: 0.5rem !important;
+        /* Overrides inline style if needed/unifies spacing */
+        text-align: center;
+    }
+
+    .experience-body-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .experience-body-grid .field {
+        background-color: var(--color-bg-body);
+        padding: 1rem;
+        border-radius: var(--radius-medium);
+        border: 1px solid var(--color-border);
+    }
+
+    .experience-body-grid .field label {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        color: var(--color-text-secondary);
+        margin-bottom: 0.5rem;
+        display: block;
+        letter-spacing: 0.5px;
+    }
+
+    .experience-body-grid .field div {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        line-height: 1.5;
+    }
+
+    .buttons-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .buttons-container .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* --- Pages Légales --- */
+    .legal-hero h1 {
+        font-size: 1.6rem;
+    }
+
+    .legal-hero .subtitle {
+        font-size: 1rem;
+    }
+
+    .legal-card .card-body {
+        padding: 1.25rem;
+    }
+
+    .legal-card h2 {
+        font-size: 1.2rem;
+    }
+
+    /* --- Page Sitemap --- */
+    main.main-sitemap {
+        margin: 1.5rem auto 2rem auto;
+    }
+
+    .sitemap-hero h1 {
+        font-size: 1.6rem;
+    }
+
+    .sitemap-hero .subtitle {
+        font-size: 1rem;
+    }
+
+    .sitemap-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .sitemap-card .card-body {
+        padding: 1.25rem;
+    }
+
+    /* --- Admin --- */
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .toolbar form {
+        flex-basis: auto;
+    }
+
+    .tbl-container {
+        overflow-x: auto;
+    }
+
+    .admin-main table {
+        min-width: 800px;
+    }
+
+    main.main-edit {
+        width: 90%;
+        max-width: 1000px;
+        margin: 2rem auto 3rem auto;
+    }
+
+    .edit-form-card .card-body {
+        padding: 1.25rem;
+    }
+
+    .edit-form .form-title {
+        font-size: 1.4rem;
+    }
+
+    .edit-form .form-description {
+        margin-bottom: 1.5rem;
+    }
+
+    .edit-form>.form-grid {
+        padding-top: 1rem;
+        margin-top: 1rem;
+    }
+
+    .edit-form-actions {
+        flex-direction: column-reverse;
+        gap: 0.75rem;
+    }
+
+    .edit-form-actions .btn {
+        width: 100%;
+        font-size: 0.95rem;
+        padding: 0.75rem 1.25rem;
+    }
+}
+
+/* ==========================================================================
+   16. RESPONSIVE (Très petits écrans ≤ 480px)
+   ========================================================================== */
+
+@media (max-width: 480px) {
+
+    /* Grilles en 1 seule colonne */
+    .latest-grid,
+    .annuaire-grid-results {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    /* Filtres annuaire en 1 colonne */
+    .annuaire-grid-filters {
+        grid-template-columns: 1fr;
+    }
+
+    .annuaire-q-field {
+        grid-column: auto;
+    }
+
+    /* Hero titles encore plus petits */
+    .home-hero-card h2 {
+        font-size: 1.25rem;
+    }
+
+    .annuaire-hero h1,
+    .ajouter-hero h1,
+    .contact-hero h1,
+    .help-hero h1,
+    .page-hero h1,
+    .experience-hero h1 {
+        font-size: 1.35rem;
+    }
+
+    /* Padding minimal sur les cartes */
+    .card-body {
+        padding: 1rem;
+    }
+
+    .card-header {
+        padding: 1rem 1rem 0.5rem;
+    }
+
+    /* Header brand encore plus compact */
+    .hdr-brand .title {
+        font-size: 0.9rem;
+    }
+
+    .hdr-brand .subtitle {
+        display: none;
+    }
+
+    /* Footer sections pleine largeur */
+    .footer-container {
+        gap: 1.5rem;
+        padding: 0 0.5rem;
+    }
+
+    /* Pagination responsive */
+    .annuaire-pagination {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .annuaire-pagination .btn {
+        width: 100%;
+    }
+
+    /* Help chips responsive */
+    .help-chips {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .help-chips .chip {
+        flex: 1 1 calc(50% - 0.5rem);
+        text-align: center;
+        font-size: 0.8rem;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* (H) Footer links : zone de touch 44px minimum ---  */
+    .footer-links-section a {
+        display: inline-block;
+        padding: 0.5rem 0;
+        min-height: 44px;
+        line-height: 44px;
+    }
+}
+
+/* ==========================================================================
+   (C) RESPONSIVE Annuaire — breakpoint intermédiaire 600px
+       (entre mobile 480px et tablette 900px)
+   ========================================================================== */
+@media (min-width: 481px) and (max-width: 900px) {
+
+    /* Sur tablette paysage/portrait, les filtres restent sur 2 colonnes max */
+    .annuaire-grid-filters {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* Le champ mot-clé et ville/distance prennent toute la largeur */
+    .annuaire-q-field,
+    .field-ville-distance {
+        grid-column: 1 / -1;
+    }
+}
+
+/* --- Scroll to Top Button --- */
+.scroll-to-top {
+    position: fixed;
+    /* (G) iOS Safe Area : evite que le bouton soit caché par la barre Safari */
+    bottom: max(2rem, calc(1rem + env(safe-area-inset-bottom)));
+    right: 2rem;
+    background-color: var(--color-bg-card);
+    /* Fond discret */
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 99;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.scroll-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+    background-color: var(--color-bg-body);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.scroll-to-top svg {
+    width: 24px;
+    height: 24px;
+}
+
+@media (max-width: 768px) {
+    .scroll-to-top {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 40px;
+        height: 40px;
+    }
+
+    .scroll-to-top svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* --- Sitemap Dynamic Styles --- */
+.sitemap-divider {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 2rem 0;
+}
+
+.sitemap-dynamic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.sitemap-section.wide {
+    grid-column: span 1;
+}
+
+.tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag-link {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    background-color: var(--color-bg-body);
+    border: 1px solid var(--color-border);
+    border-radius: 99px;
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.tag-link:hover {
+    border-color: var(--theme-accent);
+    color: var(--theme-accent);
+    transform: translateY(-1px);
+}
+
+.recent-exp-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.recent-exp-list li {
+    margin-bottom: 0.5rem;
+}
+
+.recent-exp-list a {
+    display: block;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: var(--radius-small);
+    transition: background-color 0.2s;
+}
+
+.recent-exp-list a:hover {
+    background-color: var(--color-bg-body);
+    color: var(--color-text-primary);
+}
+
+.badgee {
+    display: inline-block;
+    padding: 0.2em 0.5em;
+    font-size: 0.75em;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+    background-color: var(--color-text-secondary);
+    border-radius: 0.25rem;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+    .sitemap-dynamic-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================================
+   ADDED: Styles spécifiques Carte Expérience (Liste)
+   ========================================================================== */
+.xp-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.xp-card__body {
+    display: flex;
+    flex-direction: column;
+    /* Assure que le bouton est poussé vers le bas si on veut */
+    margin-top: auto;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    /* Assure un bon padding */
+}
+
+/* Cible le bouton "Voir plus" */
+.xp-card__body .btn {
+    margin-top: 0.4rem;
+    /* Espace demandé par l'utilisateur */
+    width: 100%;
+    /* Sur mobile, souvent mieux */
+    text-align: center;
+}
+
+/* ========================================
+   DISTANCE SLIDER — Option A (inline compact)
+   ======================================== */
+.field-ville-distance {
+    grid-column: span 2;
+}
+
+.ville-distance-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ville-distance-row #ville {
+    flex: 1 1 45%;
+    min-width: 0;
+}
+
+.ville-distance-row #distanceRange {
+    flex: 1 1 45%;
+    min-width: 0;
+}
+
+.distance-badge {
+    display: inline-block;
+    background: var(--accent, #38bdf8);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 1px 8px;
+    border-radius: 20px;
+    margin-left: 6px;
+    vertical-align: middle;
+    transition: background 0.2s;
+    line-height: 1.4;
+}
+
+/* Range input — compact */
+#distanceRange {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--card-border, #334155);
+    outline: none;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+#distanceRange:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+#distanceRange::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+}
+
+#distanceRange::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent, #38bdf8);
+    border: 2px solid var(--bg, #0f172a);
+    cursor: pointer;
+    margin-top: -5px;
+    box-shadow: 0 1px 6px rgba(56, 189, 248, 0.3);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+#distanceRange:not(:disabled)::-webkit-slider-thumb:hover {
+    transform: scale(1.25);
+    box-shadow: 0 2px 10px rgba(56, 189, 248, 0.5);
+}
+
+/* Firefox */
+#distanceRange::-moz-range-track {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--card-border, #334155);
+}
+
+#distanceRange::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent, #38bdf8);
+    border: 2px solid var(--bg, #0f172a);
+    cursor: pointer;
+    box-shadow: 0 1px 6px rgba(56, 189, 248, 0.3);
+}
+
+/* ==========================================================================
+   RESPONSIVE — Tablette (≤ 1024px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .annuaire-hero h1 {
+        font-size: 2rem;
+    }
+
+    .annuaire-hero .subtitle {
+        font-size: 1rem;
+    }
+
+    main.main-annuaire {
+        width: 95%;
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE — Mobile (≤ 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+
+    /* Hero */
+    .annuaire-hero h1 {
+        font-size: 1.5rem;
+    }
+
+    .annuaire-hero .subtitle {
+        font-size: 0.9rem;
+    }
+
+    .home-hero-card h2 {
+        font-size: 1.35rem;
+    }
+
+    /* Grille filtres : 1 colonne */
+    .annuaire-grid-filters {
+        grid-template-columns: 1fr;
+    }
+
+    .annuaire-q-field {
+        grid-column: 1;
+    }
+
+    .field-ville-distance {
+        grid-column: 1;
+    }
+
+    /* Ville + slider passent en colonne */
+    .ville-distance-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .ville-distance-row #ville,
+    .ville-distance-row #distanceRange {
+        flex: 1 1 100%;
+    }
+
+    /* Cartes résultats */
+    .annuaire-results-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Formulaire ajouter */
+    .grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+
+    /* Page contact */
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Section accueil */
+    .home-section-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    /* Quick grid */
+    .quick-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Fiches expérience */
+    .xp-card .card-header {
+        padding: 1rem;
+    }
+
+    /* Documents chips */
+    .help-chips {
+        gap: 0.5rem;
+    }
+
+    /* Onglets */
+    .tab-list {
+        flex-wrap: wrap;
+    }
+
+    /* Companies table scroll */
+    .companies-table-card .company-grid {
+        overflow-x: auto;
+    }
+
+    /* Footer */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-brand-section {
+        text-align: center;
+    }
+
+    .footer-logos-group {
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE — Petit mobile (≤ 480px)
+   ========================================================================== */
+@media (max-width: 480px) {
+    .annuaire-hero h1 {
+        font-size: 1.25rem;
+    }
+
+    main.main-annuaire,
+    main.main-ajouter {
+        width: 98%;
+    }
+
+    .contact-card .contact-form {
+        padding: 1rem;
+    }
+
+    .contact-card .header {
+        padding: 1rem;
+    }
+
+    .btn {
+        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+    }
+}
+
+/* ==========================================================================
+   X. STYLES POUR LA PAGE DOCUMENTS
+   ========================================================================== */
+.aide-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    align-items: stretch;
+    /* Equal height cards */
+}
+
+.aid-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.aid-card .card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Resources container pushed to bottom */
+.aid-resources {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* Re-style for the list version of resources */
+.doc-list-resources {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.resource-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-transform: none;
+    /* No uppercase for these */
+}
+
+.resource-btn::before {
+    content: "⬇";
+    font-size: 0.9rem;
+    color: var(--theme-accent);
+}
+
+.resource-btn:hover {
+    background-color: var(--color-badge-stage-bg);
+}
+
+/* ==========================================================================
+   X. UPLOAD DROPZONE (contact.php)
+   ========================================================================== */
+.upload-dropzone {
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-medium);
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    background-color: var(--color-input-bg);
+    transition: all var(--transition-medium);
+    position: relative;
+    cursor: default;
+    margin-top: 0.5rem;
+}
+
+.upload-dropzone.drag-active {
+    border-color: var(--theme-accent);
+    background-color: var(--color-badge-stage-bg);
+}
+
+.upload-icon {
+    font-size: 2.5rem;
+    font-style: normal;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.upload-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.upload-filename {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+.upload-filename .is-empty {
+    color: var(--color-text-secondary);
+    font-weight: 400;
+}
+
+/* ==========================================================================
+   X. EXPERIENCE DETAIL PAGE - Back button in hero
+   ========================================================================== */
+.exp-hero-nav {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.exp-back-btn {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    opacity: 0.85;
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.exp-back-btn:hover {
+    opacity: 1;
+    transform: translateX(-2px);
+}
+
+/* ==========================================================================
+   PHASE 4 - DEEP REFINEMENT & UNIVERSAL AUDIT
+   ========================================================================== */
+
+/* --- Back to Top Button (Scroll to Top) --- */
+.scroll-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    background-color: var(--theme-accent);
+    color: white;
+    border: none;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-fast), visibility var(--transition-fast), transform var(--transition-medium), background-color var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 99;
+    padding: 0;
+}
+
+.scroll-to-top svg {
+    width: 24px;
+    height: 24px;
+}
+
+.scroll-to-top:hover {
+    background-color: var(--theme-accent-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-to-top:active {
+    transform: translateY(-2px);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .scroll-to-top {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+    }
+}
+
+/* --- Enhanced Card Hover Effects --- */
+.experience-card,
+.aid-card {
+    transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
+}
+
+.experience-card:hover,
+.aid-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+    border-color: var(--theme-accent);
+}
+
+html[data-theme="dark"] .experience-card:hover,
+html[data-theme="dark"] .aid-card:hover {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Smoother transitions for page elements */
+.annuaire-results,
+.annuaire-filters {
+    transition: opacity var(--transition-medium), transform var(--transition-medium);
+}
+
+/* Mobile menu transition smoothness */
+@media (max-width: 768px) {
+
+    nav,
+    menu {
+        transition: transform var(--transition-medium), opacity var(--transition-medium);
+    }
+}
+
+/* ==========================================================================
+   26. MOBILE RESPONSIVE FIXES (QA)
+   ========================================================================== */
+@media (max-width: 768px) {
+
+    /* 1. Contact Form - Force single column */
+    .contact-form-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
+    }
+
+    /* 2. Header Title - Prevent collision with theme toggle on very small screens */
+    .logo-text h1 {
+        font-size: 1rem !important;
+        white-space: normal !important;
+        line-height: 1.2;
+    }
+
+    .logo-text span {
+        font-size: 0.75rem !important;
+    }
+
+    /* 3. Document Chips - Allow wrapping and tighter spacing */
+    .help-chips {
+        display: flex;
+        flex-wrap: wrap !important;
+        gap: 0.5rem !important;
+        justify-content: center;
+    }
+
+    .help-chips .chip {
+        margin: 0 !important;
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
+}
+
+/* ==========================================================================
+   AUDIT FIXES — badges, loader, card hover, icons
+   ========================================================================== */
+
+/* D3 — Stronger card hover lift (quick-card only — xp-card has a button inside, not a full link) */
+.quick-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
+    transform: translateY(-3px);
+}
+
+/* B5 — Admin badge colors (theme-aware) */
+.badge-verified {
+    color: var(--color-success, #059669);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.badge-unverified {
+    color: var(--color-danger, #dc2626);
+    font-size: 0.85rem;
+}
+
+/* S1/S3 — Global loader overlay (theme-aware, no hardcoded white) */
+.global-loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: color-mix(in srgb, var(--color-bg-base, #fff) 90%, transparent);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* D1 — Quick card icon display */
+.quick-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--color-accent, #6366f1) 12%, transparent);
+    color: var(--color-accent, #6366f1);
+    margin-bottom: 0.75rem;
+}

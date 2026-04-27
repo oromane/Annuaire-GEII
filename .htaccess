@@ -1,0 +1,75 @@
+# Fichier : /Annuaire/.htaccess (à la racine du projet)
+
+# ----------------------------------------------------------------------
+# | Sécurité                                                           |
+# ----------------------------------------------------------------------
+
+# Désactiver l'exploration des dossiers
+Options -Indexes
+
+# Masquer la signature du serveur
+ServerSignature Off
+
+# Protéger les fichiers sensibles
+<FilesMatch "(^\.|^composer\.(json|lock)$|^\.env$|\.(sql|md|log|ini)$)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# En-têtes de sécurité
+<IfModule mod_headers.c>
+    # Empêcher le site d'être affiché dans une iframe (Clickjacking)
+    Header set X-Frame-Options "SAMEORIGIN"
+    # Protection XSS (Cross-Site Scripting)
+    Header set X-XSS-Protection "1; mode=block"
+    # Empêcher le navigateur de deviner le type MIME
+    Header set X-Content-Type-Options "nosniff"
+    # Referrer Policy
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Bloquer l'accès direct aux dossiers internes (sauf via include PHP)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(partials|vendor|sql|logs|cache)/ - [F,L]
+</IfModule>
+
+# ----------------------------------------------------------------------
+# | Performance                                                        |
+# ----------------------------------------------------------------------
+
+# Compression GZIP
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Mise en cache navigateur (Expires Headers)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+
+    # HTML (Pas de cache ou très court pour voir les modifs)
+    ExpiresByType text/html "access plus 0 seconds"
+
+    # Data
+    ExpiresByType application/json "access plus 0 seconds"
+
+    # CSS, JS
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+
+    # Images
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # Fonts
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# Page d'erreur personnalisée pour la 404
+ErrorDocument 404 /Annuaire/pages/404.php

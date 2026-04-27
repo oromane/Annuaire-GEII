@@ -1,0 +1,7 @@
+# Désactiver le moteur de réécriture, au cas où il interfère
+RewriteEngine Off
+
+# Autoriser explicitement POST et GET sur ce dossier
+<Limit POST GET>
+    Require all granted
+</Limit>
